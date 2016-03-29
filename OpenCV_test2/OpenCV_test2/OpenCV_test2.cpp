@@ -17,16 +17,8 @@ using namespace std;
 Mat frame;
 Mat image;
 
-void Saving(int count, string str)
+void Saving()
 {
-	stringstream ss;
-	ss << count;
-	string countStr = ss.str();
-	string imageName = str+"_" + countStr;
-	string FullPath = imageName + ".jpg";// "D:\\VS2015\\Projects\\OpenCV_test2\\" +
-    //imwrite(FullPath, histImage);      //saving histograms
-	cout << " image has been saved " << std::endl;
-	++count;
 
 }
 
@@ -77,7 +69,14 @@ void showColorHist(const Mat &temp)  //function of color histrogram forming
 			Scalar(0, 0, 255), 2, 8, 0);
 	}
 	static int count(0);
-	
+	stringstream ss;
+	ss << count;
+	string countStr = ss.str();
+	string imageName = "hist_" + countStr;
+	string FullPath = imageName + ".jpg";// "D:\\VS2015\\Projects\\OpenCV_test2\\" +
+	imwrite(FullPath, histImage);      //saving histograms
+	cout << " image has been saved " << std::endl;
+	++count;
 
 	// Display
 	namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE);
@@ -95,7 +94,7 @@ static void onMouse(int event, int x, int y, int, void*)  //getting the frame fr
 		string countStr = ss.str();
 		string imageName = "image_" + countStr;
 		string FullPath = imageName + ".jpg";// "D:\\VS2015\\Projects\\OpenCV_test2\\" +
-	//	imwrite(FullPath, frame);
+		imwrite(FullPath, frame);
 		cout << " image has been saved " << std::endl;
 		++count;
 		image = imread(FullPath, 1);
