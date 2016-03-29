@@ -1,0 +1,12 @@
+﻿Сборка начата 29.03.2016 17:36:11.
+     1>Проект "D:\VS2015\Projects\OpenCV_test2\OpenCV_test2\OpenCV_test2.vcxproj" в узле 2 (целевые объекты Build).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /GL /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Release\\" /Fd"x64\Release\vc140.pdb" /Gd /TP /errorReport:prompt OpenCV_test2.cpp stdafx.cpp
+         OpenCV_test2.cpp
+     1>OpenCV_test2.cpp(3): fatal error C1083: Не удается открыть файл включение: opencv2/core/core.hpp: No such file or directory
+         stdafx.cpp
+     1>Сборка проекта "D:\VS2015\Projects\OpenCV_test2\OpenCV_test2\OpenCV_test2.vcxproj" завершена (целевые объекты Build) с ошибкой.
+
+Ошибка сборки.
+
+Затраченное время: 00:00:00.56
