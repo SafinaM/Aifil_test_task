@@ -69,7 +69,7 @@ Mat showColorHist(const Mat &src)  //function of color histrogram forming
 	//}
 
 	Mat hsv;
-	
+
 	cvtColor(src, hsv, COLOR_BGR2HSV);
 	// Quantize the hue to 30 levels
 	// and the saturation to 32 levels
@@ -102,8 +102,8 @@ Mat showColorHist(const Mat &src)  //function of color histrogram forming
 				Scalar::all(intensity),
 				CV_FILLED);
 		}
-//	namedWindow("Source", 1);
-//	imshow("Source", src);
+	//	namedWindow("Source", 1);
+	//	imshow("Source", src);
 	namedWindow("H-S Histogram", 1);
 	imshow("H-S Histogram", histImg);
 
@@ -120,36 +120,35 @@ Mat showColorHist(const Mat &src)  //function of color histrogram forming
 	//++count;
 
 	// Display
-//	namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE);
-//	imshow("calcHist Demo", histImg);
+	//	namedWindow("calcHist Demo", CV_WINDOW_AUTOSIZE);
+	//	imshow("calcHist Demo", histImg);
 }
 auto getHist(const Mat &src)
 {
-		Mat hsv;
-		cvtColor(src, hsv, COLOR_BGR2HSV);
-		// Quantize the hue to 30 levels
-		// and the saturation to 32 levels
-		int hbins = 30, sbins = 32;
-		int histSize[] = { hbins, sbins };
-		// hue varies from 0 to 179, see cvtColor
-		float hranges[] = { 0, 180 };
-		// saturation varies from 0 (black-gray-white) to
-		// 255 (pure spectrum color)
-		float sranges[] = { 0, 256 };
-		const float* ranges[] = { hranges, sranges };
-		MatND hist;
-		// we compute the histogram from the 0-th and 1-st channels
-		int channels[] = { 0, 1 };
-		calcHist(&hsv, 1, channels, Mat(), hist, 2, histSize, ranges, true, false);
-		return hist;
+	Mat hsv;
+	cvtColor(src, hsv, COLOR_BGR2HSV);
+	// Quantize the hue to 30 levels
+	// and the saturation to 32 levels
+	int hbins = 30, sbins = 32;
+	int histSize[] = { hbins, sbins };
+	// hue varies from 0 to 179, see cvtColor
+	float hranges[] = { 0, 180 };
+	// saturation varies from 0 (black-gray-white) to
+	// 255 (pure spectrum color)
+	float sranges[] = { 0, 256 };
+	const float* ranges[] = { hranges, sranges };
+	MatND hist;
+	// we compute the histogram from the 0-th and 1-st channels
+	int channels[] = { 0, 1 };
+	calcHist(&hsv, 1, channels, Mat(), hist, 2, histSize, ranges, true, false);
+	return hist;
 }
 
 static void onMouse(int event, int x, int y, int, void*)  //getting the frame from left button press
 {
 	static int count(0);
-	if (event == EVENT_LBUTTONDOWN) 
+	if (event == EVENT_LBUTTONDOWN)
 	{
-
 		stringstream ss;
 		ss << count;
 		string countStr = ss.str();
@@ -162,14 +161,14 @@ static void onMouse(int event, int x, int y, int, void*)  //getting the frame fr
 		H1 = getHist(image);  //!!! was frame get historfram of definite frame
 		matHist.push_back(H1);
 		Sleep(100);
-//		namedWindow("Frame", CV_WINDOW_AUTOSIZE);
-//		imshow("Frame", image);
+		//		namedWindow("Frame", CV_WINDOW_AUTOSIZE);
+		//		imshow("Frame", image);
 		showColorHist(image);
 	}
 }
 void formMatHistFromFiles()
 {
-	int nImages = 26;
+	int nImages = 69;
 	int count = 0;
 	stringstream ss;
 	ss << count;
@@ -216,34 +215,36 @@ int main()
 		H2 = showColorHist(frame);
 		if (!matHist.empty())
 		{
-			for(auto x: matHist)
+			for (auto x : matHist)
 			{
-				cout << compareHist(x, H2, HISTCMP_CHISQR_ALT) << endl;
-				Point center(250, 250);
-				if (compareHist(x, H2, HISTCMP_CHISQR_ALT) < 800000)
+				
+				if (compareHist(x, H2, HISTCMP_CHISQR_ALT) < 1085000)
 				{
+					cout << compareHist(x, H2, HISTCMP_CHISQR_ALT) << endl;
+					Point center(250, 250);
 					circle(frame, center, 30, Scalar(0, 0, 255), -1);
-				//	Sleep(300);
-				}	
+				//	break;
+					//	Sleep(300);
+				}
 			}
-			
-		//	cout << compareHist(H1, H2, CV_COMP_CHISQR) << endl;
-		//	cout << compareHist(H1, H2, CV_COMP_BHATTACHARYYA) << endl;
-		//	cout << compareHist(H1, H2, CV_COMP_INTERSECT) << endl;
-		//	Sleep(200);
-			
+
+			//	cout << compareHist(H1, H2, CV_COMP_CHISQR) << endl;
+			//	cout << compareHist(H1, H2, CV_COMP_BHATTACHARYYA) << endl;
+			//	cout << compareHist(H1, H2, CV_COMP_INTERSECT) << endl;
+			//	Sleep(200);
+
 		}
-	//	Sleep(50);
+		//Sleep(100);
 
 		imshow("Video 1 for task from Aifil", (frame)); //show the frame in "Video 1 for task from Aifil" window
-		if (waitKey(30) == 27) //waiting for 'esc' key press for 30 ms. If 'Esc' key is pressed, break loop
+		if (waitKey(30) == 35) //waiting for 'esc' key press for 30 ms. If 'Esc' key is pressed, break loop
 		{
 			cout << "Esc key is pressed by user" << endl;
 			break;
 		}
 	}
 
-//	cin.get();
+	//	cin.get();
 	return 0;
 
 }
