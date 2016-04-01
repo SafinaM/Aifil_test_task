@@ -18,10 +18,12 @@ using namespace std;
 Mat frame;
 Mat image;
 vector <Mat> matHist;
+vector <Mat> matHistB;
 Mat H1;
+Mat H3;
 Mat H2;
-
-
+int slider_pos = 0;
+VideoCapture cap("test3.mp4"); // open the video file for reading
 Mat showColorHist(const Mat &src)  //function of color histrogram forming
 {
 	//vector<Mat> bgr_planes;  // Separate the image in 3 places ( B, G and R )
@@ -169,10 +171,10 @@ static void onMouse(int event, int x, int y, int, void*)  //getting the frame fr
 void formMatHistFromFiles()
 {
 	int nImages = 69;
-	int count = 0;
+	int count = 1;
 	stringstream ss;
 	ss << count;
-	for (int i = 0; i < nImages; i++)
+	for (int i = 1; i < nImages; i++)
 	{
 		Mat temp;
 		string countStr = ss.str();
@@ -185,10 +187,17 @@ void formMatHistFromFiles()
 	}
 }
 
+void on_trackbar(int, void*)
+{
+	int position = (double)slider_pos;
+	cap.set(CV_CAP_PROP_POS_FRAMES, position);
+	//imshow("",);
+}
+
 int main()
 {
-	VideoCapture cap("test1.mp4"); // open the video file for reading
-
+	
+	
 	if (!cap.isOpened())  // if not success, exit program
 	{
 		cout << "Cannot open the video file" << endl;
@@ -196,13 +205,32 @@ int main()
 	}
 
 	//cap.set(CV_CAP_PROP_POS_MSEC, 300); //start the video at 300ms
-
+	int iFrame = (int)cap.get(CV_CAP_PROP_FRAME_COUNT);
+	
 	double fps = cap.get(CV_CAP_PROP_FPS); //get the frames per seconds of the video
 	cout << "Frame per seconds : " << fps << endl; //cout frames per seconds
 
-	namedWindow("Video 1 for task from Aifil", CV_WINDOW_AUTOSIZE); //create a window called "MyVideo"
+	namedWindow("Video 1 for task from Aifil", CV_WINDOW_AUTOSIZE); //create a window called "Video 1 for task from Aifil"
+	if (iFrame != 0)
+	{
+		createTrackbar("Position", "Video 1 for task from Aifil", &slider_pos, iFrame, on_trackbar);
+	}
 	setMouseCallback("Video 1 for task from Aifil", onMouse, 0);  //work with mouse
-	formMatHistFromFiles();
+	//formMatHistFromFiles();
+	
+	
+	FileStorage out("my_histogram_file.xml", cv::FileStorage::READ);
+	if (!out.isOpened())
+	{
+		cout << "unable to open file storage!" << endl;
+	}
+	matHist.clear();
+	int frameCount = (int)out["myHist"];
+
+	out["myHist"] >> matHist;
+
+	
+	
 	while (true)
 	{
 		bool bSuccess = cap.read(frame); // read a new frame from video
@@ -218,15 +246,16 @@ int main()
 			for (auto x : matHist)
 			{
 				
-				if (compareHist(x, H2, HISTCMP_CHISQR_ALT) < 1085000)
+				if (compareHist(x, H2, HISTCMP_CHISQR_ALT) < 1000000)
 				{
 					cout << compareHist(x, H2, HISTCMP_CHISQR_ALT) << endl;
 					Point center(250, 250);
-					circle(frame, center, 30, Scalar(0, 0, 255), -1);
+	     			circle(frame, center, 30, Scalar(0, 0, 255), -1);
 				//	break;
 					//	Sleep(300);
 				}
 			}
+			
 
 			//	cout << compareHist(H1, H2, CV_COMP_CHISQR) << endl;
 			//	cout << compareHist(H1, H2, CV_COMP_BHATTACHARYYA) << endl;
@@ -235,8 +264,10 @@ int main()
 
 		}
 		//Sleep(100);
-
+		
 		imshow("Video 1 for task from Aifil", (frame)); //show the frame in "Video 1 for task from Aifil" window
+		cvSetTrackbarPos("Slider", "Video 1 for task from Aifil", ++slider_pos);
+
 		if (waitKey(30) == 35) //waiting for 'esc' key press for 30 ms. If 'Esc' key is pressed, break loop
 		{
 			cout << "Esc key is pressed by user" << endl;
@@ -244,6 +275,20 @@ int main()
 		}
 	}
 
+	/*FileStorage fs("my_histogram_file.xml", cv::FileStorage::WRITE);
+	if (!fs.isOpened())
+	{
+		cout << "unable to open file storage!" << endl;
+	}
+	
+		fs << "myHist" << matHist;
+	fs.release();*/
+
+	
+	
+	out.release();
+
+	
 	//	cin.get();
 	return 0;
 
