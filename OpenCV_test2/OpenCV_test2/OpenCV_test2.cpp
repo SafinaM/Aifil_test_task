@@ -93,23 +93,51 @@ public:
 	}
 
 	void initDataFromFile()
-	{
-		FileStorage out("my_histogram_file.xml", cv::FileStorage::READ);         //downloading results from xml-file
+	{	
+		FileStorage out("my_histogram_file_NEW.xml", cv::FileStorage::READ);         //downloading results from xml-file
 		if (!out.isOpened())
 		{
 			cout << "Unable to open file storage!" << endl;
 		}
 		matHist.clear();
-		matHistB.clear();
-		int frameCount = (int)out["myHist"];
 		out["myHist"] >> matHist;         //the vector with the histogrames of white and mixed frames
-		out["myHist"] >> matHistB;
+		out["myHistB"] >> matHistB;
 		out.release();
+		
+		//FileStorage out("my_histogram_file.xml", cv::FileStorage::READ);         //downloading results from xml-file
+		//if (!out.isOpened())
+		//{
+		//	cout << "Unable to open file storage!" << endl;
+		//}
+		//matHist.clear();
+		//out["myHist"] >> matHist;         //the vector with the histogrames of white and mixed frames
+		//out.release();
+
+		//FileStorage outB("my_histogram_file_B.xml", cv::FileStorage::READ);         //downloading results from xml-file
+		//if (!out.isOpened())
+		//{
+		//	cout << "Unable to open file storage!" << endl;
+		//}
+		//
+		//matHistB.clear();
+		//outB["myHistB"] >> matHistB;         //the vector with the histogrames of white and mixed frames
+		//								  //	out["myHistB"] >> matHistB;
+		//outB.release();
+		//matHistB.erase(matHistB.begin() + 2);
 	}
 
 	void saveNewDataForBasicFrames()
 	{
-		FileStorage fs("my_histogram_file.xml", cv::FileStorage::WRITE);
+		/*FileStorage fs("my_histogram_file.xml", cv::FileStorage::WRITE);
+		if (!fs.isOpened())
+		{
+			cout << "unable to open file storage!" << endl;
+		}
+		fs << "myHist" << matHist;
+		fs << "myHistB" << matHistB;
+		fs.release();*/
+
+		FileStorage fs("my_histogram_file_After_Saving.xml", cv::FileStorage::WRITE);
 		if (!fs.isOpened())
 		{
 			cout << "unable to open file storage!" << endl;
@@ -198,7 +226,7 @@ public:
 			if (R != 0 && L != 0 && iFrame - L >= 300)
 			{
 				Edge *p = new Edge;
-				int deltaL = 40;
+				int deltaL = 60;
 				int deltaR = 20;
 
 				if (L - deltaL > 1)
@@ -311,7 +339,7 @@ int main()
 	cut.initDataFromFile();
 	cut.openFileSetTrackbar();
 	cut.findBorders();
-//	cut.saveNewDataForBasicFrames(); //by default write to array with the "black frames"
+	cut.saveNewDataForBasicFrames(); //by default write to array with the "black frames"
 	cut.showResults();
 	cut.saveResultsToFile();
 	cin.get();
