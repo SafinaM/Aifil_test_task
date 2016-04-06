@@ -1,6 +1,0 @@
-Frame numbers 1) 1 - 81
-Frame numbers 2) 3641 - 3836
-Frame numbers 3) 7407 - 7620
-Frame numbers 4) 11195 - 11452
-Frame numbers 5) 14993 - 15287
-Frame numbers 6) 18835 - 19101
