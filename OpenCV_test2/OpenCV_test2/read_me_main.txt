@@ -17,6 +17,7 @@ It is possible to teach program to recognize necessary template frames on border
 By default the template frames are adding to "black" sequence. 
 It is possible to save changes in templates in xml-file. By default changing will not happend.
 Результы работы алгоритма приведены ниже.
+
 Для первого видео: 
 Frame numbers 1) 1 - 62
 Frame numbers 2) 3638 - 3839
@@ -24,7 +25,7 @@ Frame numbers 3) 7390 - 7625
 Frame numbers 4) 11196 - 11447
 Frame numbers 5) 14882 - 15139
 Frame numbers 6) 18691 - 18906
-Для второго: 
+Для второго:
 Frame numbers 1) 1 - 81
 Frame numbers 2) 3641 - 3836
 Frame numbers 3) 7407 - 7620
@@ -38,4 +39,4 @@ Frame numbers 3) 7407 - 7620
 Frame numbers 4) 11195 - 11452
 Frame numbers 5) 14993 - 15287
 Frame numbers 6) 18835 - 19101
-
+test4
