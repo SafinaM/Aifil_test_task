@@ -24,7 +24,7 @@ Frame numbers 3) 7390 - 7625
 Frame numbers 4) 11196 - 11447
 Frame numbers 5) 14882 - 15139
 Frame numbers 6) 18691 - 18906
-Для второго:
+Для второго: 
 Frame numbers 1) 1 - 81
 Frame numbers 2) 3641 - 3836
 Frame numbers 3) 7407 - 7620
